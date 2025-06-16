@@ -1,6 +1,5 @@
 from ple.games.flappybird import FlappyBird
 from ple import PLE
-import numpy as np
 import time
 import argparse
 import importlib

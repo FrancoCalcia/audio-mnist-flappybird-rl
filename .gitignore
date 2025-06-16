@@ -2,3 +2,5 @@ env
 
 # Ignore pycache files
 *__pycache__*
+
+*.pkl

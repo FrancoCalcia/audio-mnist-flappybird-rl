@@ -1,4 +1,5 @@
 from agentes.base import Agent
+import pygame
 
 class ManualAgent(Agent):
     """Agente que toma acciones manualmente: salta al presionar la barra espaciadora."""
@@ -9,7 +10,6 @@ class ManualAgent(Agent):
         self._space_was_pressed = False
 
     def act(self, state):
-        import pygame
         pygame.event.pump()
         keys = pygame.key.get_pressed()
         jump = False
