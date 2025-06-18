@@ -1,5 +1,6 @@
 import numpy as np
 import pickle
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
@@ -21,21 +22,28 @@ y = np.array(y)
 
 # --- Definir la red neuronal ---
 model = keras.Sequential([
-    # COMPLETAR: Definir la arquitectura de la red neuronal
+    layers.Input(shape=(X.shape[1],)),   
+    layers.Dense(32, activation='relu'),
+    layers.Dropout(0.2),
+    layers.Dense(32, activation='relu'),
+    layers.Dense(y.shape[1])  #valores Q (uno por acción)
 ])
 
 model.compile(optimizer='adam', loss='mse')
 
 # --- Entrenar la red neuronal ---
-# COMPLETAR: Ajustar hiperparámetros según sea necesario
-# model.fit(X, y, ... demas opciones de entrenamiento ...)
+history = model.fit(X, y, epochs=50, batch_size=64, verbose=1, validation_split=0.2)
 
 # --- Mostrar resultados del entrenamiento ---
-# Completar: Imprimir métricas de entrenamiento
+plt.plot(history.history['loss'], label='loss')
+if 'val_loss' in history.history:
+    plt.plot(history.history['val_loss'], label='val_loss')
+plt.legend()
+plt.title("Evolución del error durante el entrenamiento")
+plt.show()
 
 # --- Guardar el modelo entrenado ---
-# COMPLETAR: Cambia el nombre si lo deseas
-model.save('flappy_q_nn_model')
+model.save('flappy_q_nn_model.keras')
 print('Modelo guardado como TensorFlow SavedModel en flappy_q_nn_model/')
 
 # --- Notas para los alumnos ---

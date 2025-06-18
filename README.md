@@ -10,7 +10,7 @@ python3 -m venv env
 
 2. Activar el entorno:
 ```bash
-source env/bin/activate
+source env/Scripts/activate
 ```
 
 3. Instalar dependencias:
@@ -24,6 +24,8 @@ pip3 install -r requirements.txt
     - `base.py`: Clase base para todos los agentes.
     - `random_agent.py`: Agente que toma acciones aleatorias.
     - `manual_agent.py`: Agente que permite jugar manualmente usando la barra espaciadora.
+    - `dq_agent.py`: - Agente que juega aprende de la experiencia actualizando una Q-table con cada interacción en el juego.
+    - `nn_agent.py`: Agemte que juega empleando una red neuronal para estimar los valores Q. 
 
 ## Uso
 
@@ -82,4 +84,4 @@ Puedes crear tus propios agentes en la carpeta `agentes/` siguiendo la interfaz 
   ```bash
   python test_agent.py --agent agentes.nn_agent.NNAgent
   ```
-- Asegúrate de que el modelo guardado esté disponible en la ruta esperada (`flappy_q_nn_model/` por defecto).
+- Asegúrate de que el modelo guardado esté disponible en la ruta esperada (`flappy_q_nn_model.keras`).
