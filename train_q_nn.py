@@ -6,7 +6,7 @@ from tensorflow import keras
 from tensorflow.keras import layers
 
 # --- Cargar Q-table entrenada ---
-QTABLE_PATH = 'flappy_birds_q_table.pkl'  # Cambia el path si es necesario
+QTABLE_PATH = 'flappy_birds_q_table.pkl' 
 with open(QTABLE_PATH, 'rb') as f:
     q_table = pickle.load(f)
 
@@ -23,7 +23,7 @@ y = np.array(y)
 # --- Definir la red neuronal ---
 model = keras.Sequential([
     layers.Input(shape=(X.shape[1],)),   
-    layers.Dense(32, activation='relu'),
+    layers.Dense(64, activation='relu'),
     layers.Dropout(0.2),
     layers.Dense(32, activation='relu'),
     layers.Dense(y.shape[1])  #valores Q (uno por acción)
@@ -32,7 +32,7 @@ model = keras.Sequential([
 model.compile(optimizer='adam', loss='mse')
 
 # --- Entrenar la red neuronal ---
-history = model.fit(X, y, epochs=50, batch_size=64, verbose=1, validation_split=0.2)
+history = model.fit(X, y, epochs=90, batch_size=64, verbose=1, validation_split=0.2)
 
 # --- Mostrar resultados del entrenamiento ---
 plt.plot(history.history['loss'], label='loss')
@@ -45,6 +45,7 @@ plt.show()
 # --- Guardar el modelo entrenado ---
 model.save('flappy_q_nn_model.keras')
 print('Modelo guardado como TensorFlow SavedModel en flappy_q_nn_model/')
+
 
 # --- Notas para los alumnos ---
 # - Puedes modificar la arquitectura de la red y los hiperparámetros.
