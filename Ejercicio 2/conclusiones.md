@@ -69,7 +69,7 @@ model = keras.Sequential([
 
 - **Gráfico del entrenamiento**:
 
-![Evolución del error durante el entrenamiento](8a7afae0-65d6-49cc-bdc1-94f28b9d526e.png)
+![Evolución del error durante el entrenamiento](Ejercicio 2\curva loss.jpg)
 
 - **Ventajas**:
   - Permite generalizar a estados no vistos
