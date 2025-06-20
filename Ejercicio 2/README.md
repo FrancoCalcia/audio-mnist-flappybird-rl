@@ -25,7 +25,7 @@ pip3 install -r requirements.txt
     - `random_agent.py`: Agente que toma acciones aleatorias.
     - `manual_agent.py`: Agente que permite jugar manualmente usando la barra espaciadora.
     - `dq_agent.py`: - Agente que juega aprende de la experiencia actualizando una Q-table con cada interacción en el juego.
-    - `nn_agent.py`: Agemte que juega empleando una red neuronal para estimar los valores Q. 
+    - `nn_agent.py`: Agente que juega empleando una red neuronal para estimar los valores Q. 
 
 ## Uso
 
