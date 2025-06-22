@@ -2,12 +2,12 @@
 
 ## Ingeniería de características: Discretización del estado
 
-Para entrenar al agente Q-learning en el entorno de Flappy Bird, se realizó una discretización manual del estado del juego. Se seleccionaron cinco variables como representación del entorno:
+Para entrenar al agente Q-learning en el entorno de Flappy Bird, se realizó una discretización manual del estado del juego. Se usaron cinco variables, calculadas con los 8 estados del juego, como representación del entorno:
 
-1. Distancia horizontal al primer tubo (`next_pipe_dist_to_player`)
-2. Diferencia vertical entre el jugador y el centro del hueco del primer tubo
+1. Distancia horizontal al primer tubo (usamos `next_pipe_dist_to_player`)
+2. Diferencia vertical entre el jugador y el centro del hueco del primer tubo (`player_y`,`next_pipe_top_y`, `next_pipe_bottom_y`)
 3. Distancia horizontal al segundo tubo (`next_next_pipe_dist_to_player`)
-4. Diferencia vertical entre el jugador y el centro del hueco del segundo tubo
+4. Diferencia vertical entre el jugador y el centro del hueco del segundo tubo (`player_y`,`next_next_pipe_top_y`, `next_next_pipe_bottom_y`)
 5. Velocidad vertical del jugador (`player_vel`)
 
 Estas variables fueron discretizadas mediante binning:
