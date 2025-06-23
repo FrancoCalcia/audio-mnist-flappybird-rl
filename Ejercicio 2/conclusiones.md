@@ -2,6 +2,11 @@
 
 ## Ingeniería de características: Discretización del estado
 
+Convertimos las variables continuas del juego en un vector de enteros para indexar la Q-table.
+Por ejemplo, la distancia al tubo `dx1` se agrupa en buckets de 25 px, de modo que todos los valores de 0–24 px caen en el bucket 0, los de 25–49 px en el bucket 1, etc.
+Hicimos lo mismo para la diferencia vertical `(dy)` y el segundo tubo (con bucket de 40 px), y usamos la velocidad ya entera del jugador.
+Así obtenemos una tupla discreta `(dx1_bin, dy1_bin, dx2_bin, dy2_bin, vel_bin)` que mantiene la resolución necesaria sin explotar el tamaño de la tabla.
+
 Para entrenar al agente Q-learning en el entorno de Flappy Bird, se realizó una discretización manual del estado del juego. Se usaron cinco variables, calculadas con los 8 estados del juego, como representación del entorno:
 
 1. Distancia horizontal al primer tubo (usamos `next_pipe_dist_to_player`)
