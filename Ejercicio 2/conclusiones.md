@@ -2,27 +2,42 @@
 
 ## Ingeniería de características: Discretización del estado
 
-Convertimos las variables continuas del juego en un vector de enteros para indexar la Q-table.
-Por ejemplo, la distancia al tubo `dx1` se agrupa en buckets de 25 px, de modo que todos los valores de 0–24 px caen en el bucket 0, los de 25–49 px en el bucket 1, etc.
-Hicimos lo mismo para la diferencia vertical `(dy)` y el segundo tubo (con bucket de 40 px), y usamos la velocidad ya entera del jugador.
-Así obtenemos una tupla discreta `(dx1_bin, dy1_bin, dx2_bin, dy2_bin, vel_bin)` que mantiene la resolución necesaria sin explotar el tamaño de la tabla.
+Para que el agente tabular pudiera aprender, transformamos las señales continuas del juego en un conjunto finito de enteros capaces de indexar la Q-table. Seleccionamos cinco dimensiones clave del estado:
 
-Para entrenar al agente Q-learning en el entorno de Flappy Bird, se realizó una discretización manual del estado del juego. Se usaron cinco variables, calculadas con los 8 estados del juego, como representación del entorno:
+1. **dx1**: distancia horizontal al primer tubo (`next_pipe_dist_to_player`)
+2. **dy1**: diferencia vertical entre el pájaro y el centro del hueco del primer tubo
+3. **dx2**: distancia horizontal al segundo tubo (`next_next_pipe_dist_to_player`)
+4. **dy2**: diferencia vertical entre el pájaro y el centro del hueco del segundo tubo
+5. **vel**: velocidad vertical del pájaro (`player_vel`), que ya viene entera
+
+Se usaron cinco variables, calculadas con los 8 estados del juego, como representación del entorno:
 
 1. Distancia horizontal al primer tubo (usamos `next_pipe_dist_to_player`)
-2. Diferencia vertical entre el jugador y el centro del hueco del primer tubo (`player_y`,`next_pipe_top_y`, `next_pipe_bottom_y`)
+2. Diferencia vertical entre el jugador y el centro del hueco del primer tubo (`player_y,next_pipe_top_y, next_pipe_bottom_y`)
 3. Distancia horizontal al segundo tubo (`next_next_pipe_dist_to_player`)
-4. Diferencia vertical entre el jugador y el centro del hueco del segundo tubo (`player_y`,`next_next_pipe_top_y`, `next_next_pipe_bottom_y`)
+4. Diferencia vertical entre el jugador y el centro del hueco del segundo tubo (`player_y,next_next_pipe_top_y, next_next_pipe_bottom_y`)
 5. Velocidad vertical del jugador (`player_vel`)
 
-Estas variables fueron discretizadas mediante binning:
+Cada valor continuo se agrupa en “buckets” para reducir el número de estados posibles:
 
-- `DX1_BIN = 25` (primer tubo)
-- `DX2_BIN = 40` (segundo tubo)
-- `DY_BIN = 25` (diferencia vertical)
-- La velocidad del jugador se mantuvo como un entero ya discreto.
+* **Primer tubo** (`dx1`, `dy1`): buckets de **25 px**
+* **Segundo tubo** (`dx2`, `dy2`): buckets de **40 px**
+* **Velocidad**: se mantiene tal cual (enteros de –8 a +8)
 
-Esta estrategia buscó evitar la explosión del espacio de estados, optando por una discretización no demasiado fina. La elección funcionó correctamente: permitió que el agente generalice sin requerir una cantidad excesiva de episodios para cubrir los posibles estados.
+Por ejemplo, si `dx1 = 137.3 px`, calculamos
+
+```python
+dx1_bin = int(137.3 // 25)  # = 5
+```
+
+Así, todos los dx entre 125–149 px caen en el mismo bucket. Al aplicar este mismo procedimiento a las cinco variables obtenemos una tupla discreta:
+
+```python
+(dx1_bin, dy1_bin, dx2_bin, dy2_bin, vel_bin)
+```
+
+Este enfoque mantiene suficiente **resolución** para distinguir situaciones críticas sin generar una Q-table inmanejable. Como resultado, el agente aprendió políticas eficaces en pocos episodios, evitando la explosión combinatoria de estados que produciría una discretización más fina.
+
 
 ---
 
