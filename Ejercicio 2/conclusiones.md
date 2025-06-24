@@ -2,14 +2,7 @@
 
 ## Ingeniería de características: Discretización del estado
 
-Para que el agente tabular pudiera aprender, transformamos las señales continuas del juego en un conjunto finito de enteros capaces de indexar la Q-table. Seleccionamos cinco dimensiones clave del estado:
-
-1. **dx1**: distancia horizontal al primer tubo (`next_pipe_dist_to_player`)
-2. **dy1**: diferencia vertical entre el pájaro y el centro del hueco del primer tubo
-3. **dx2**: distancia horizontal al segundo tubo (`next_next_pipe_dist_to_player`)
-4. **dy2**: diferencia vertical entre el pájaro y el centro del hueco del segundo tubo
-5. **vel**: velocidad vertical del pájaro (`player_vel`), que ya viene entera
-
+Para que el agente tabular pudiera aprender, transformamos las señales continuas del juego en un conjunto finito de enteros capaces de indexar la Q-table.
 Se usaron cinco variables, calculadas con los 8 estados del juego, como representación del entorno:
 
 1. Distancia horizontal al primer tubo (usamos `next_pipe_dist_to_player`)
@@ -36,7 +29,7 @@ Así, todos los dx entre 125–149 px caen en el mismo bucket. Al aplicar este m
 (dx1_bin, dy1_bin, dx2_bin, dy2_bin, vel_bin)
 ```
 
-Este enfoque mantiene suficiente **resolución** para distinguir situaciones críticas sin generar una Q-table inmanejable. Como resultado, el agente aprendió políticas eficaces en pocos episodios, evitando la explosión combinatoria de estados que produciría una discretización más fina.
+Este enfoque mantiene suficiente **resolución** para distinguir situaciones críticas sin generar una Q-table inmanejable. Como resultado, el agente aprendió políticas que resultaron eficaces, evitando la explosión combinatoria de estados que produciría una discretización más fina.
 
 
 ---
